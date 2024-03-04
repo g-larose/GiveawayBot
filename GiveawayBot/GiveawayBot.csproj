@@ -32,11 +32,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Config\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Enums\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
+    <Folder Include="Factories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Config\config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
