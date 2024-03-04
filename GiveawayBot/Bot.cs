@@ -24,7 +24,8 @@ namespace GiveawayBot
         public async Task RunAsync()
         {
             await using var client = new GuildedBotClient(token!)
-                .AddCommands(new GiveawayCommands(), prefix!);
+                .AddCommands(new GiveawayCommands(), prefix!)
+                .AddCommands(new ModCommands(), prefix!);
 
             client.Prepared
                 .Subscribe(async me =>

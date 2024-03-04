@@ -19,16 +19,14 @@ namespace GiveawayBot.Commands
             var serverId = invokator.Message.ServerId;
             var author = await invokator.ParentClient.GetMemberAsync((HashId)serverId!, authorId);
 
-            if (command is null || command.Equals(""))
+           
+
+            //var permissions = await invokator.ParentClient.GetMemberPermissionsAsync((HashId)serverId!, authorId);
+            if (author.Name.Trim().Equals("Kyniant") || author.Name.Trim().Equals("ACGroupholder12"))
             {
-                await invokator.ReplyAsync($"{author.Name} I was expecting a command but found []. example commands are [ \"start\", \"stop\", \"pause\" ]");
-            }
-            else
-            {
-                var permissions = await invokator.ParentClient.GetMemberPermissionsAsync((HashId)serverId!, authorId);
-                if (!permissions.Contains(Permission.ManageServer))
+                if (command is null || command.Equals(""))
                 {
-                    await invokator.ReplyAsync($"{author.Name} it seems you **do not** have the correct permissions to run this command, command **ignored**");
+                    await invokator.ReplyAsync($"{author.Name} I was expecting a command but found []. example commands are [ \"start\", \"stop\", \"pause\" ]");
                 }
                 else
                 {
@@ -38,17 +36,21 @@ namespace GiveawayBot.Commands
                             await invokator.ReplyAsync($"{author.Name} you used [start] command");
                             break;
                         case "stop":
-                             await invokator.ReplyAsync($"{author.Name} you used [stop] command");
+                            await invokator.ReplyAsync($"{author.Name} you used [stop] command");
                             break;
                         case "pause":
-                             await invokator.ReplyAsync($"{author.Name} you used [pause] command");
+                            await invokator.ReplyAsync($"{author.Name} you used [pause] command");
                             break;
                         default:
-                             await invokator.ReplyAsync($"{author.Name} sorry, I don't recognise that command");
+                            await invokator.ReplyAsync($"{author.Name} sorry, I don't recognise that command");
                             break;
 
                     }
                 }
+            }
+            else
+            {
+                await invokator.ReplyAsync($"{author.Name} it seems you **do not** have the correct permissions to run this command, command **ignored**");
             }
         }
     }
