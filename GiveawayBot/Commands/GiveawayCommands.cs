@@ -1,4 +1,6 @@
-﻿using Guilded.Base;
+﻿using GiveawayBot.Services;
+using Guilded.Base;
+using Guilded.Base.Embeds;
 using Guilded.Commands;
 using Guilded.Permissions;
 using System;
@@ -18,11 +20,11 @@ namespace GiveawayBot.Commands
             var authorId = invokator.Message.CreatedBy;
             var serverId = invokator.Message.ServerId;
             var author = await invokator.ParentClient.GetMemberAsync((HashId)serverId!, authorId);
-
+            var embed = new Embed();
            
 
             //var permissions = await invokator.ParentClient.GetMemberPermissionsAsync((HashId)serverId!, authorId);
-            if (author.Name.Trim().Equals("Kyniant") || author.Name.Trim().Equals("ACGroupholder12"))
+            if (author.Name.Trim().Equals("Kyniant") || author.Name.Trim().Equals("ACGroupholder12") || author.Name.Equals("async<RogueLabs>"))
             {
                 if (command is null || command.Equals(""))
                 {
@@ -33,10 +35,25 @@ namespace GiveawayBot.Commands
                     switch (command)
                     {
                         case "start":
-                            await invokator.ReplyAsync($"{author.Name} you used [start] command");
+                            {
+                                var members = await invokator.ParentClient.GetMembersAsync((HashId)serverId!);
+                               
+                                var giveawayProvider = new GiveawayServiceProvider();
+                                var picked = giveawayProvider.PickRandomWuinner(members);
+                                embed.SetTitle($"{author.Name} started Giveaway!");
+                                embed.SetDescription($"and the winner is **{picked}**");
+                                embed.SetFooter($"{invokator.ParentClient.Name}");
+                                embed.SetTimestamp(DateTime.Now);
+                                await invokator.ReplyAsync(embed);
+                            }
+                            
                             break;
                         case "stop":
-                            await invokator.ReplyAsync($"{author.Name} you used [stop] command");
+                            {
+                                embed.SetTitle("");
+                                await invokator.ReplyAsync(embed);
+                            }
+                            
                             break;
                         case "pause":
                             await invokator.ReplyAsync($"{author.Name} you used [pause] command");
